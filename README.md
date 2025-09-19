@@ -3,6 +3,14 @@
 🚀 This project demonstrates **infrastructure automation** on **Azure** using a combination of **Bicep**, **Ansible**, and **Bash scripting**.  
 It provisions infrastructure, configures servers, and deploys a **LAMP stack social platform application**.
 
+Please Note:
+
+ - This was just a lab project for me to test my skills mainly on Ansible and Bash
+ - The work is not completely professional and there are things I'm doing in Bash that I could easily do in Ansible
+ - I choose to put my skills to the test on All areas of this project
+ - This project does not save records into a unified database but rather saves everything locally
+ - 
+
 ---
 
 ## 📑 Project Overview
@@ -26,24 +34,23 @@ It provisions infrastructure, configures servers, and deploys a **LAMP stack soc
 
 ## 📂 Repository Structure
 
-```
+```html
 azure-automation-lab/
-│── ansible/
-│ ├── playbooks/ # Ansible playbooks for VM and app setup
-│ ├── roles/ # Roles for modular configuration
-│ ├── inventory/ # Inventory files for targeting VMs
-│── bash/
-│ ├── setup.sh # VM initialization script
-│ ├── cleanup.sh # Tear-down utilities
-│── bicep/
-│ ├── main.bicep # Main infrastructure definition
-│ ├── modules/ # Reusable Bicep modules
-│── docs/
-│ ├── architecture.png # Project architecture diagram
-│ ├── README.md # Project documentation
-│── .gitignore
-│── LICENSE
-│── README.md
+├── ansible
+    ├── ansible.cfg
+    ├── group_vars
+    ├── inventory
+    ├── playbooks
+    └── roles
+    │   ├── apache
+    │   ├── mysql
+    │   ├── php
+    │   └── social_app
+├── bash
+├── bicep
+├── LICENSE
+├── README.md
+└── .gitignore
 ```
 
 
@@ -76,16 +83,22 @@ azure-automation-lab/
     --template-file bicep/main.bicep
    ```
 
-3. **Run Ansible Playbooks**
+3. **Run Playbook to Install LAMP Stack**
 
    ```bash
-   ansible-playbook -i ansible/inventory/hosts ansible/playbooks/setup.yml
+   ansible-playbook -i ansible/inventory/inventory.ini ansible/playbooks/full_lamp_install.yml
    ```
 
-4. **Deploy the LAMP Application**
+4. **Run Playbook to Setup LAMP Stack**
 
    ```bash
-   ansible-playbook -i ansible/inventory/hosts ansible/playbooks/deploy-lamp.yml
+   ansible-playbook -i ansible/inventory/inventory.ini ansible/playbooks/full_lamp_setup.yml
+   ```
+
+5. **Deploy the LAMP Application**
+
+   ```bash
+   ansible-playbook -i ansible/inventory/inventory.ini ansible/playbooks/lamp-site.yml
    ```
 
 
