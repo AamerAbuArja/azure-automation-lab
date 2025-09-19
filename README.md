@@ -9,7 +9,7 @@ Please Note:
  - The work is not completely professional and there are things I'm doing in Bash that I could easily do in Ansible
  - I choose to put my skills to the test on All areas of this project
  - This project does not save records into a unified database but rather saves everything locally
- - 
+ <!-- -  -->
 
 ---
 
@@ -18,17 +18,17 @@ Please Note:
 - **Infrastructure Deployment (Bicep):**
   - Deploys **3 Ubuntu virtual machines** on Azure.
   - Configures networking and resource group setup.
-  - Modular Bicep templates for reusability.
+  <!-- - Modular Bicep templates for reusability. -->
 
 - **Configuration Management (Ansible + Bash):**
   - Configures base OS settings with Ansible roles.
-  - Executes Bash scripts for additional server setup and utilities.
+  <!-- - Executes Bash scripts for additional server setup and utilities. -->
   - Automates package installation and system hardening.
 
 - **Application Deployment (Ansible):**
   - Deploys a **social platform app** built on the **LAMP stack (Linux, Apache, MySQL, PHP)**.
   - Configures Apache virtual hosts and MySQL database.
-  - Ensures idempotent deployments for repeatable results.
+  <!-- - Ensures idempotent deployments for repeatable results. -->
 
 ---
 
@@ -58,11 +58,11 @@ azure-automation-lab/
 
 ## 🛠️ Technologies Used
 
-- **Azure Bicep** → Infrastructure-as-Code (IaC) for VM provisioning.  
+- **Bicep** → Infrastructure-as-Code (IaC) for VM provisioning.  
 - **Ansible** → Configuration management and LAMP deployment.  
-- **Bash** → Utility scripts for provisioning and automation.  
+- **Bash** → Basic utility scripts.  
 - **Azure** → Cloud provider for hosting infrastructure.  
-- **LAMP Stack** → Social platform application deployment.  
+<!-- - **LAMP Stack** → Social platform application deployment.   -->
 
 ---
 
@@ -71,16 +71,17 @@ azure-automation-lab/
 1. **Clone the repository**
 
    ```bash
-   git clone https://github.com/<your-username>/azure-automation-lab.git
+   git clone https://github.com/AamerAbuArja/azure-automation-lab.git
    cd azure-automation-lab
    ```
 
 2. **Deploy Infrastructure with Bicep**
 
    ```bash
-   az deployment group create \
-    --resource-group <your-rg> \
-    --template-file bicep/main.bicep
+    az deployment group create \
+        --resource-group <YOUR_RG> \
+        --template-file bicep/main.bicep \
+        --parameters adminPublicKey="$(cat <PATH_TO_SSH_KEY>)"
    ```
 
 3. **Run Playbook to Install LAMP Stack**
