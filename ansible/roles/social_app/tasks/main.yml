@@ -1,0 +1,39 @@
+# - name: "UFW firewall allow HTTP on port {{ http_port }}"
+#   ufw:
+#     rule: allow
+#     port: "{{ http_port }}"
+#     proto: tcp
+
+- name: clone Social App using GIT Module
+  ansible.builtin.git:
+    repo: 'https://github.com/troyGH/SocialHub.git'
+    dest: "/var/www/{{ http_host }}/SocialHub"
+    version: master
+    update: yes
+    force: yes
+  environment:
+    GIT_TERMINAL_PROMPT: 0
+
+- name: Set Credentials for Config.php
+  ansible.builtin.template:
+    src: templates/config.php.j2
+    dest: "/var/www/{{ http_host }}/SocialHub/php/config.php"
+    force: yes
+
+- name: Import MySQL DB for social network
+  community.mysql.mysql_db:
+    login_user: "{{ db_user }}"
+    login_password: "{{ db_passwd }}"
+    name: social_network
+    state: import
+    target: "/var/www/{{ http_host }}/SocialHub/socialhub.sql"
+
+- name: Set up Virtualhost for new Social Site
+  template:
+    src: "templates/virtual_host.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_config }}"
+
+- name: Restart Apache
+  service:
+    name: apache2
+    state: restarted

@@ -1,0 +1,37 @@
+# - name: Move MySQL Update Script
+#   ansible.builtin.template:
+#     src: 'files/update_mysql_script.sh.j2'
+#     dest: '/home/{{ ansible_user }}/project/ums.sh'
+#     mode: u+rwx,g+r,o+r
+#     force: yes
+
+# - name: Execute MySQL Script
+#   ansible.builtin.shell: /home/{{ ansible_user }}/project/ums.sh
+#   args:
+#     executable: /bin/bash
+
+- name: Ensure MySQL root password is set
+  community.mysql.mysql_user:
+    name: root
+    host: localhost
+    password: "{{ mysql_root_password }}"
+    login_unix_socket: /var/run/mysqld/mysqld.sock
+    plugin: mysql_native_password
+    state: present
+
+- name: Create application database
+  community.mysql.mysql_db:
+    name: "{{ db_name }}"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+
+- name: Create database user
+  community.mysql.mysql_user:
+    name: "{{ db_user }}"
+    password: "{{ db_passwd }}"
+    priv: "{{ db_name }}.*:ALL"
+    host: "localhost"
+    state: present
+    login_user: root
+    login_password: "{{ mysql_root_password }}"

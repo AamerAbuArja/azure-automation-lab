@@ -1,0 +1,4 @@
+- name: Create Info.php file
+  template:
+    src: "templates/info.php.j2"
+    dest: "/var/www/{{ http_host }}/index.php"

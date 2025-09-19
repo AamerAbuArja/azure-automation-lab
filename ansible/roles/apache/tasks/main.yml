@@ -1,0 +1,34 @@
+- name: Create document root
+  file:
+    path: /var/www/{{ http_host }}
+    state: directory
+    owner: "adminuser"
+    mode: '0755'
+  tags: 
+    - setup
+
+- name: Set up Apache virtualhost
+  template:
+    src: "templates/virtual_host.conf.j2"
+    dest: "/etc/apache2/sites-available/{{ http_config }}"
+  notify: Reload Apache
+  tags: 
+    - setup
+
+- name: Cammand Setup enable site
+  ansible.builtin.shell:
+    cmd: /usr/sbin/a2ensite {{ http_config }}
+  tags: 
+    - setup
+
+- name: Cammand Setup enable site
+  ansible.builtin.shell:
+    cmd: /usr/sbin/a2dissite 000-default.conf
+  notify: Reload Apache
+  tags: 
+    - setup
+
+- name: Check Apache Service
+  ansible.builtin.include_tasks: check_apache_service.yml
+  tags:
+    - always

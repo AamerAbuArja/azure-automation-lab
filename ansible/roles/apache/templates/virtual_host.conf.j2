@@ -1,0 +1,16 @@
+<VirtualHost *:{{ http_port }}>
+    ServerAdmin aamerabuarja@yahoo.com
+    DocumentRoot /var/www/{{ http_host }}
+
+    # This catches requests to your server's IP
+    ServerName localhost
+
+    <Directory /var/www/{{ http_host }}>
+        Options Indexes FollowSymLinks
+        AllowOverride All
+        Require all granted
+    </Directory>
+
+    ErrorLog ${APACHE_LOG_DIR}/{{ http_host }}_error.log
+    CustomLog ${APACHE_LOG_DIR}/{{ http_host }}_access.log combined
+</VirtualHost>

@@ -1,0 +1,19 @@
+- name: LAMP Stack Installation
+  hosts: webservers
+  become: yes
+  vars_files:
+    - ../group_vars/all.yml
+    
+  tasks: 
+    - name: Update Package Manager and Cache
+      apt: update_cache=true force_apt_get=true cache_valid_time=3600 upgrade=full
+
+    - name: Install LAMP Stack and prerequisites
+      apt: name={{ item }} update_cache=yes state=latest
+      loop: [ 'apache2', 'mysql-server', 'python3-pymysql', 'php', 'php-mysql', 'libapache2-mod-php', 'git' ]
+
+    - name: "UFW - Allow HTTP on port {{ http_port }}"
+      ufw:
+        rule: allow
+        port: "{{ http_port }}"
+        proto: tcp

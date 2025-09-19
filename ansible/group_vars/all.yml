@@ -1,0 +1,7 @@
+http_port: 80
+http_host: tri-lumen
+http_config: tri-lumen.conf
+db_passwd: StrongPass123!
+db_user: socialhub_user
+db_name: social_network
+mysql_root_password: StrongPass123!
