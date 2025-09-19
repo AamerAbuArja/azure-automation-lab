@@ -1,0 +1,44 @@
+# OS / Editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+
+# Python/Ansible related
+__pycache__/
+*.retry
+*.pyc
+
+# SSH keys / secrets
+*.pem
+*.key
+*.crt
+*.pub
+*.secret
+secrets.yml
+vault.yml
+
+# Environment files
+.env
+*.tfstate
+*.tfstate.backup
+
+# Azure CLI cache
+.azure/
+
+# Temporary files
+*.tmp
+*.bak
+*.old
+
+# Ignore all markdown files
+*.md
+
+# Keep all README.md files (any folder)
+!README.md
+!*/README.md
